@@ -23,7 +23,7 @@ A hands-on DevOps/SRE demo project to simulate real-world infrastructure workflo
 
 | Layer         | Tool                   |
 |---------------|------------------------|
-| Orchestration | Kubernetes (AKS or kind) |
+| Orchestration | Kubernetes (AKS/k8s) |
 | Deployment    | Helm                   |
 | CI/CD         | GitHub Actions         |
 | Monitoring    | Prometheus + Grafana   |
