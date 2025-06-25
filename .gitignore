@@ -1,2 +1,6 @@
 kubectl
 .terraform/
+.terraform/
+*.tfstate
+*.tfvars
+.terraform.lock.hcl
