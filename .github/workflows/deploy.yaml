@@ -1,24 +1,33 @@
-name: CI - Lint Helm Chart
+name: Deploy to AKS
 
 on:
   push:
     branches:
       - main
-  pull_request:
 
 jobs:
-  helm-lint:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Set up Helm
-        uses: azure/setup-helm@v3
-        with:
-          version: v3.12.0
+    - name: Set up Azure CLI
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Lint Helm chart
-        run: helm lint charts/demo-app
+    - name: Set AKS context
+      run: |
+        az aks get-credentials --resource-group aks-demo-rg --name aks-demo-cluster --overwrite-existing
+
+    - name: Set up Helm
+      uses: azure/setup-helm@v3
+
+    - name: Deploy Helm chart
+      run: |
+        helm upgrade --install demo-app ./charts/demo-app \
+          --namespace default \
+          --create-namespace
 
